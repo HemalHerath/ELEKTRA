@@ -1,11 +1,17 @@
 package com.example.kokil.elektra;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.service.notification.NotificationListenerService;
 import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +28,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.google.android.gms.internal.zzs.TAG;
 
 /**
- * Created by maleesha5 on 4/7/2017.
+ * Created by Hemal on 4/7/2017.
  */
-
 
 class WeatherStatus extends AsyncTask<Void, Void, Void> {
     @Override
@@ -42,7 +48,7 @@ class WeatherStatus extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... arg0) {
         HttpHandler sh = new HttpHandler();
         // Making a request to url and getting response
-        String url = "http://api.openweathermap.org/data/2.5/weather?q=Peliyagoda&appid=6b305548a0cfd94c7fa2bcbc99037db8";
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=Kurunegala&appid=6b305548a0cfd94c7fa2bcbc99037db8";
         String jsonStr = sh.makeServiceCall(url);
 
         Log.e(TAG, "Response from url: " + jsonStr);
@@ -57,10 +63,27 @@ class WeatherStatus extends AsyncTask<Void, Void, Void> {
                 for (int i = 0; i < weather.length(); i++) {
                     JSONObject c = weather.getJSONObject(i);
                     String id = c.getString("id");
+                    int intId = Integer.parseInt(id);
+
+                    if (200 <= intId && intId <= 250) {//if there is some Thondering give a alert
+
+//                        Notification noti = new Notification.Builder(MainActivity.this)
+//                                .setTicker("Tickertittle")
+//                                .setContentTitle("ELEKTRA WEATHER ALERT")
+//                                .setContentText("TURN OFF the multi plug for lighting safety")
+//                                .setContentIntent();
+//
+//                           noti.flags = Notification.FLAG_AUTO_CANCEL;
+//                           NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+//                           nm.notify(0,noti);
+
+                    }
+
                     String main = c.getString("main");
                     String descrip = c.getString("description");
                     String icon = c.getString("icon");
                     // String gender = c.getString("gender");
+
 
                     // Phone node is JSON Object
                      /*   JSONObject phone = c.getJSONObject("phone");
